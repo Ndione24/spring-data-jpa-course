@@ -1,32 +1,23 @@
 package com.example.demo;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-import static javax.persistence.GenerationType.SEQUENCE;
+// ctrl + P à l'interieur d'une annotation, donne l'ensemble des proprietés.
 
+@Data
 @Entity(name = "Student")
 @Table(
         name = "student",
         uniqueConstraints = {
-                @UniqueConstraint(name = "student_email_unique", columnNames = "email")
+                @UniqueConstraint(name = "student_email_unique", columnNames = {"email","first_name"})
         }
 )
 public class Student {
 
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "student_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(
@@ -73,45 +64,6 @@ public class Student {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 
     @Override
     public String toString() {
